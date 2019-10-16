@@ -15,7 +15,7 @@ namespace GanacheAPI.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { "value5", "value2" };
+            return new string[] { "value6", "value2" };
         }
 
         // GET api/<controller>/5
