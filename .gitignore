@@ -1,0 +1,10 @@
+
+.vs/GanacheAPI/config/
+
+.vs/GanacheAPI/v16/
+
+bin/Debug/netcoreapp3.0/
+
+obj/Debug/netcoreapp3.0/
+
+obj/
