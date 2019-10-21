@@ -26,7 +26,7 @@ namespace GanacheAPI.Controllers
             }
             catch (Exception e)
             {
-                return "";
+                return e.ToString;
             }
         }
 
