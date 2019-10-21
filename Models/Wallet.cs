@@ -9,7 +9,8 @@ namespace GanacheAPI.Models
 {
     public class Wallet
     {
-        public string password { get; set; }
+        public string publicKey { get; set; }
+        public string privateKey { get; set; }
 
 
 
