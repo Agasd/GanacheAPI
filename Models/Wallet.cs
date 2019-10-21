@@ -31,7 +31,7 @@ namespace GanacheAPI.Models
             //don't judge, I'm sure there are 9999 better ways to do it, but googleing would take more time than writing it.
             String returnJson = "{\"privateKey\":\"";
             returnJson += privateKey;
-            returnJson += '"';
+            returnJson += "\",";
             returnJson += "\"publicKey\":\"";
             returnJson += account.Address;
             returnJson += '"';
