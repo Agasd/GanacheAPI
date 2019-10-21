@@ -20,7 +20,14 @@ namespace GanacheAPI.Controllers
         [HttpGet("{id}")]
         public string Get(string id)
         {
-            return Wallet.getAccountBalance(id).Result;
+            try
+            {
+                return Wallet.getAccountBalance(id).Result;
+            }
+            catch (Exception e)
+            {
+                return "";
+            }
         }
 
 
@@ -32,8 +39,14 @@ namespace GanacheAPI.Controllers
 
         public string Post()
         {
-
-            return Wallet.CreateNewEthereumAddressAsync();
+            try
+            {
+                return Wallet.CreateNewEthereumAddressAsync();
+            }
+            catch (Exception e)
+            {
+                return "";
+            }
         }
 
 
@@ -41,8 +54,13 @@ namespace GanacheAPI.Controllers
         [HttpPut]
         public void Put([FromBody]Transaction transaction)
         {
-            transaction.executeTransaction();
+            try
+            {
+                transaction.executeTransaction();
+            }
+            catch (Exception e)
+            {
+            }
         }
-
     }
 }
