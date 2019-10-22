@@ -10,6 +10,7 @@ obj/Debug/netcoreapp3.0/
 obj/
 <<<<<<< refs/remotes/origin/master
 <<<<<<< refs/remotes/origin/master
+<<<<<<< refs/remotes/origin/master
 
 .vs/GanacheAPI/DesignTimeBuild/
 =======
@@ -18,3 +19,7 @@ obj/
 >>>>>>> gitignore
 =======
 >>>>>>> Revert "gitignore"
+=======
+
+.vs/GanacheAPI/DesignTimeBuild/
+>>>>>>> Revert "Revert "gitignore""
