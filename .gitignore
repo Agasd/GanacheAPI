@@ -8,5 +8,10 @@ bin/Debug/netcoreapp3.0/
 obj/Debug/netcoreapp3.0/
 
 obj/
+<<<<<<< refs/remotes/origin/master
 
 .vs/GanacheAPI/DesignTimeBuild/
+=======
+
+.vs/GanacheAPI/DesignTimeBuild/
+>>>>>>> gitignore
