@@ -14,3 +14,7 @@ obj/
 
 .vs/GanacheAPI/DesignTimeBuild/
 .vs/GanacheAPI/DesignTimeBuild/
+
+.vs/slnx.sqlite
+
+.vs/VSWorkspaceState.json
