@@ -50,16 +50,18 @@ namespace GanacheAPI.Controllers
         }
 
 
-        // PUT api/<controller>/5
+        // PUT api/<controller>/
         [HttpPut]
-        public void Put([FromBody]Transaction transaction)
+        public string Put([FromBody]Transaction transaction)
         {
             try
             {
                 transaction.executeTransaction();
+                return "success";
             }
             catch (Exception e)
             {
+                return "fail";
             }
         }
     }
