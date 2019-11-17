@@ -10,3 +10,7 @@ obj/Debug/netcoreapp3.0/
 obj/
 
 .vs/GanacheAPI/DesignTimeBuild/
+
+.vs/slnx.sqlite
+
+.vs/VSWorkspaceState.json
