@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +10,8 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace GanacheAPI.Models
 {
-    [Table("Users")]
+
+    [Table("Users", Schema = "blockchain")]
 
     public class User
     {
