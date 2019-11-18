@@ -29,16 +29,21 @@ namespace GanacheAPI.Controllers
 
         // GET: api/Users/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(string id)
+        public async Task<ActionResult<User>> GetUser([FromBody]User requestedUser)
         {
-            var user = await _context.Users.FindAsync(id);
-
+            var user = await _context.Users.FindAsync(requestedUser.username);
             if (user == null)
             {
                 return NotFound();
             }
-
-            return user;
+            else if(user.password == requestedUser.password)
+            {
+                return user;
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         // PUT: api/Users/5
@@ -95,8 +100,8 @@ namespace GanacheAPI.Controllers
                     throw;
                 }
             }
-
-            return CreatedAtAction("GetUser", new { id = user.username }, user);
+            user.credit = 5000;
+            return CreatedAtAction("GetUser", new { id = user.username}, user);
         }
 
         // DELETE: api/Users/5
