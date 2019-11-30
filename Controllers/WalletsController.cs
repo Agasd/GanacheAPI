@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Nethereum.Web3;
-using GanacheAPI.Models;
-
+using Ganache.API.Models;
+using Nethereum.Hex.HexConvertors.Extensions;
 
 namespace GanacheAPI.Controllers
 {
@@ -22,7 +22,7 @@ namespace GanacheAPI.Controllers
         {
             try
             {
-                return Wallet.getAccountBalance(id).Result;
+                return WalletViewModel.getAccountBalance(id).Result;
             }
             catch (Exception e)
             {
@@ -41,7 +41,8 @@ namespace GanacheAPI.Controllers
         {
             try
             {
-                return Wallet.CreateNewEthereumAddressAsync();
+                return CreateNewEthereumAddressAsync();
+
             }
             catch (Exception e)
             {
@@ -56,13 +57,31 @@ namespace GanacheAPI.Controllers
         {
             try
             {
-                transaction.executeTransaction();
+                //transaction.executeTransaction();
                 return "success";
             }
             catch (Exception e)
             {
                 return "fail";
             }
+        }
+
+        public static String CreateNewEthereumAddressAsync()
+        {
+            var ecKey = Nethereum.Signer.EthECKey.GenerateKey();
+            var privateKey = ecKey.GetPrivateKeyAsBytes().ToHex();
+            var account = new Nethereum.Web3.Accounts.Account(privateKey);
+
+            //don't judge, I'm sure there are 9999 better ways to do it, but googleing would take more time than writing it.
+            String returnJson = "{\"privateKey\":\"";
+            returnJson += privateKey;
+            returnJson += "\",";
+            returnJson += "\"publicKey\":\"";
+            returnJson += account.Address;
+            returnJson += '"';
+            returnJson += '}';
+
+            return returnJson;
         }
     }
 }
