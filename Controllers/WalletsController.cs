@@ -22,7 +22,8 @@ namespace GanacheAPI.Controllers
         {
             try
             {
-                return WalletViewModel.getAccountBalance(id).Result;
+                //return WalletViewModel.getAccountBalance(id).Result;
+                return "asd";
             }
             catch (Exception e)
             {
