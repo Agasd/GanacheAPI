@@ -38,6 +38,7 @@ namespace Ganache.API
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IWalletRepository, WalletRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ITransactionRepository, TransactionRepository>();
 
             var key = Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value);
             
