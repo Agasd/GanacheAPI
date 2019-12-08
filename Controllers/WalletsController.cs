@@ -6,12 +6,24 @@ using Microsoft.AspNetCore.Mvc;
 using Nethereum.Web3;
 using Ganache.API.Models;
 using Nethereum.Hex.HexConvertors.Extensions;
+using Microsoft.AspNetCore.Authorization;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.Extensions.Configuration;
+using Ganache.API.Data;
 
-namespace GanacheAPI.Controllers
+namespace Ganache.API.Controllers
 {
     [Route("api/[controller]")]
     public class WalletsController : Controller
     {
+        private readonly IWalletRepository _repo;
+        private readonly IConfiguration _config;
+
+        public WalletsController(IWalletRepository repo, IConfiguration config)
+        {
+            _repo = repo;
+            _config = config;
+        }
 
         /*
          [GET] ether balance using wallet's public key
@@ -20,10 +32,11 @@ namespace GanacheAPI.Controllers
         [HttpGet("{id}")]
         public string Get(string id)
         {
+            WalletViewModel wallet = new WalletViewModel(new Wallet());
+            wallet.publicKey = id;
             try
             {
-                //return WalletViewModel.getAccountBalance(id).Result;
-                return "asd";
+                return wallet.getAccountBalance().Result;
             }
             catch (Exception e)
             {
@@ -37,18 +50,33 @@ namespace GanacheAPI.Controllers
          * Create wallet: /api/wallets
          */
         [HttpPost]
-
-        public string Post()
+        [Authorize]
+        public async Task<String> Post()
         {
-            try
-            {
-                return CreateNewEthereumAddressAsync();
 
-            }
-            catch (Exception e)
-            {
-                return "";
-            }
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var accessToken = Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
+            var token = tokenHandler.ReadJwtToken(accessToken);
+            String username = token.Claims.ToArray()[1].ToString().Replace("unique_name: ", string.Empty);
+
+            Wallet wallet = new Wallet();
+            wallet.UserId = username;
+
+            CreateNewEthereumAddressAsync(ref wallet);
+            await _repo.Create(wallet);
+
+            String returnJson = "{\"privateKey\":\"";
+
+            //don't judge, I'm sure there are 9999 better ways to do it, but googleing would take more time than writing it.
+            returnJson += wallet.Private_key;
+            returnJson += "\",";
+            returnJson += "\"publicKey\":\"";
+            returnJson += wallet.Public_key;
+            returnJson += '"';
+            returnJson += '}';
+
+            return returnJson;
+
         }
 
 
@@ -67,22 +95,15 @@ namespace GanacheAPI.Controllers
             }
         }
 
-        public static String CreateNewEthereumAddressAsync()
+        public static void CreateNewEthereumAddressAsync(ref Wallet wallet)
         {
             var ecKey = Nethereum.Signer.EthECKey.GenerateKey();
             var privateKey = ecKey.GetPrivateKeyAsBytes().ToHex();
             var account = new Nethereum.Web3.Accounts.Account(privateKey);
 
-            //don't judge, I'm sure there are 9999 better ways to do it, but googleing would take more time than writing it.
-            String returnJson = "{\"privateKey\":\"";
-            returnJson += privateKey;
-            returnJson += "\",";
-            returnJson += "\"publicKey\":\"";
-            returnJson += account.Address;
-            returnJson += '"';
-            returnJson += '}';
+            wallet.Private_key = privateKey;
+            wallet.Public_key = account.Address;
 
-            return returnJson;
         }
     }
 }

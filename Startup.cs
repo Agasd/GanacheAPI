@@ -36,6 +36,8 @@ namespace Ganache.API
             services.AddControllers()
                 .AddNewtonsoftJson();
             services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<IWalletRepository, WalletRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             var key = Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value);
             
@@ -49,10 +51,8 @@ namespace Ganache.API
                 };
             });
 
-         //   services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -61,7 +61,6 @@ namespace Ganache.API
             }
             else
             {
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowCredentials());

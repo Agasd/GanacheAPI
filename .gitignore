@@ -18,3 +18,7 @@ obj/
 .vs/slnx.sqlite
 
 .vs/VSWorkspaceState.json
+
+.vs/Ganache.API/v16/.suo
+
+.vs/Ganache.API/v16/Server/sqlite3/
