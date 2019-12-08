@@ -50,12 +50,16 @@ namespace Ganache.API.Controllers
 
             if (userFromRepo != null)
             {
-                if (username == _walletRepo.GetById(transactionDTO.Sender_publicKey).UserId);
+
+                Wallet senderWallet = _walletRepo.GetById(transactionDTO.Sender_publicKey);
+                Wallet recepientWallet = _walletRepo.GetById(transactionDTO.Recepient_publicKey);
+                string senderUserId = senderWallet.UserId;
+                if (username == senderUserId)
                 {
                     Transaction dbModel = new Transaction();
 
                     dbModel.Sender_username = username;
-                    dbModel.Recepient_username = _walletRepo.GetById(transactionDTO.Recepient_publicKey).UserId;
+                    dbModel.Recepient_username = recepientWallet.UserId;
 
                     dbModel.Sender_publicKey = transactionDTO.Sender_publicKey;
                     dbModel.Recepient_publicKey = transactionDTO.Recepient_publicKey;
