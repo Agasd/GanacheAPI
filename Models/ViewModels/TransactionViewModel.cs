@@ -38,13 +38,22 @@ namespace Ganache.API.Models
 
         }
 
-        public async void executeTransaction(String privateKey)
+        public async Task<bool> executeTransaction(String privateKey)
         {
             var account = new Account(privateKey);
             var web3 = new Web3(account, Config.GANACHE);
             Decimal amountInDecimal = Decimal.Parse(etherAmount.ToString());
-            var transaction = await web3.Eth.GetEtherTransferService()
+            try
+            {
+                var transaction = await web3.Eth.GetEtherTransferService()
                 .TransferEtherAndWaitForReceiptAsync(this.recepientPublicKey, amountInDecimal);
+                return true;
+            }
+            catch(Exception e)
+            {
+                return false;
+            }
+
         }
 
     }
