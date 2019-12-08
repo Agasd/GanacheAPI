@@ -8,6 +8,7 @@ namespace Ganache.API.Data
     {
         Task<bool> Create(Wallet wallet);
         Wallet[] GetByUserId(String username);
+        Wallet GetById(String id);
 
     }
 }

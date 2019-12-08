@@ -10,7 +10,7 @@ namespace Ganache.API.Models
         public string Sender_username { get; set; }
         public string Recepient_username { get; set; }
 
-        public string Sender_privateKey { get; set; }
+        public string Sender_publicKey { get; set; }
         public string Recepient_publicKey { get; set; }
 
         public long Credit_Amount { get; set; }

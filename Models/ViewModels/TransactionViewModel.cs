@@ -18,7 +18,7 @@ namespace Ganache.API.Models
         int id;
         public string senderUsername { get; set; }
         public string recepientUsername { get; set; }
-        public string senderPrivateKey { get; set; }
+        public string senderPublicKey { get; set; }
         public string recepientPublicKey { get; set; }
 
         public long creditAmount { get; set; }
@@ -30,7 +30,7 @@ namespace Ganache.API.Models
             this.senderUsername     = transaction.Sender_username;
             this.recepientUsername  = transaction.Recepient_username;
             
-            this.senderPrivateKey   = transaction.Sender_privateKey;
+            this.senderPublicKey   = transaction.Sender_publicKey;
             this.recepientPublicKey = transaction.Recepient_publicKey;
 
             this.creditAmount       = transaction.Credit_Amount;
@@ -38,9 +38,9 @@ namespace Ganache.API.Models
 
         }
 
-        public async void executeTransaction()
+        public async void executeTransaction(String privateKey)
         {
-            var account = new Account(this.senderPrivateKey);
+            var account = new Account(privateKey);
             var web3 = new Web3(account, Config.GANACHE);
             Decimal amountInDecimal = Decimal.Parse(etherAmount.ToString());
             var transaction = await web3.Eth.GetEtherTransferService()

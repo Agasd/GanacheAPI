@@ -34,6 +34,11 @@ namespace Ganache.API.Data
 
             return wallets;
         }
+        public Wallet GetById(string id)
+        {
+            Wallet wallet = _context.Wallets.Find(id);
+            return wallet;
+        }
     }
 
 }
