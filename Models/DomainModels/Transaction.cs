@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Ganache.API.Models
 {
     public class Transaction
@@ -15,6 +17,8 @@ namespace Ganache.API.Models
 
         public long Credit_Amount { get; set; }
         public long Ether_Amount { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime TransactionDateTime { get; set; }
 
     }

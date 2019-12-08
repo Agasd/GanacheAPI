@@ -54,7 +54,7 @@ namespace Ganache.API.Controllers
                 Wallet senderWallet = _walletRepo.GetById(transactionDTO.Sender_publicKey);
                 Wallet recepientWallet = _walletRepo.GetById(transactionDTO.Recepient_publicKey);
                 string senderUserId = senderWallet.UserId;
-                if (username == senderUserId)
+                if (senderWallet != null && username == senderUserId)
                 {
                     Transaction dbModel = new Transaction();
 
@@ -66,6 +66,7 @@ namespace Ganache.API.Controllers
 
                     dbModel.Credit_Amount = 0;
                     dbModel.Ether_Amount = transactionDTO.Ether_Amount;
+                    dbModel.TransactionDateTime = DateTime.UtcNow;
 
                     TransactionViewModel tmv = new TransactionViewModel(dbModel);
                    
