@@ -18,7 +18,6 @@ namespace Ganache.API.Models
         public long Credit_Amount { get; set; }
         public long Ether_Amount { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime TransactionDateTime { get; set; }
 
     }
