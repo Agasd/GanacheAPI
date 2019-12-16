@@ -9,5 +9,6 @@ namespace Ganache.API.Data
     public interface ITransactionRepository
     {
         Task<bool> SaveTransasction(Transaction transaction);
+        Task<Transaction[]> getAllTransactions();
     }
 }

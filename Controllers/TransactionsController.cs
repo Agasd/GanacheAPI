@@ -28,7 +28,29 @@ namespace Ganache.API.Controllers
 
         private readonly IConfiguration _config;
 
+        [HttpGet("getall")]
+        [Authorize]
+        public async Task<Transaction[]> GetAll()
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var accessToken = Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
+            var token = tokenHandler.ReadJwtToken(accessToken);
+            String username = token.Claims.ToArray()[1].ToString().Replace("unique_name: ", string.Empty);
+            User userFromRepo = await _userRepo.GetUserInfo(username);
 
+            //return _repo.GetByUserId(username);
+
+            if (username == "admin")
+            {
+                var transactions = await _repo.getAllTransactions();
+                return transactions;
+            }
+            else
+            {
+                return null;
+            }
+
+        }
         public TransactionsController(ITransactionRepository repo, IWalletRepository walletRepo, IUserRepository userRepo, IConfiguration config)
         {
             _repo = repo;

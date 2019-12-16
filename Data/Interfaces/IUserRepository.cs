@@ -9,5 +9,7 @@ namespace Ganache.API.Data
     public interface IUserRepository
     {
         Task<User> GetUserInfo(String username);
+        Task<User[]> GetAllUsers();
+
     }
 }

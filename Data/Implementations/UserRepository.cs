@@ -18,6 +18,10 @@ namespace Ganache.API.Data
                 return null; // User does not exist.
             return user;
         }
+        public async Task<User[]> GetAllUsers() {
+            var users =  await _context.Users.ToArrayAsync<User>();
+            return users;
+        }
 
 
     }

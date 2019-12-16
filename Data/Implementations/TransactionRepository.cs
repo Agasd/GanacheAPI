@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ganache.API.Data
 {
@@ -25,6 +26,11 @@ namespace Ganache.API.Data
             {
                 return false;
             }
+        }
+        public async Task<Transaction[]> getAllTransactions()
+        {
+            var transactions = await _context.Transactions.ToArrayAsync<Transaction>();
+            return transactions;
         }
     }
 }

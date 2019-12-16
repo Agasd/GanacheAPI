@@ -61,5 +61,39 @@ namespace Ganache.API.Controllers
             }
 
         }
+
+        [HttpGet("getall")]
+        [Authorize]
+        public async Task<UserInfo[]> GetAll()
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var accessToken = Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
+            var token = tokenHandler.ReadJwtToken(accessToken);
+            String username = token.Claims.ToArray()[1].ToString().Replace("unique_name: ", string.Empty);
+            User userFromRepo = await _repo.GetUserInfo(username);
+
+            //return _repo.GetByUserId(username);
+
+            if (username == "admin")
+            {
+                var users = await _repo.GetAllUsers();
+                List<UserInfo> userInfos = new List<UserInfo>();
+                foreach(User user in users)
+                {
+                    UserInfo ui = new UserInfo();
+                    ui.Username = user.Username;
+                    ui.Email = user.Email;
+                    ui.Credit = user.Credit;
+                    ui.Wallets = _walletRepo.GetByUserId(ui.Username);
+                    userInfos.Add(ui);
+                }
+                return userInfos.ToArray();
+            } 
+            else
+            {
+                return null;
+            }
+
+        }
     }
 }
